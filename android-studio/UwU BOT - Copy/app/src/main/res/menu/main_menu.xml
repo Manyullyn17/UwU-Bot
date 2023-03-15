@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bild1"
+        android:icon="@drawable/num_one"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/bild2"
+        android:icon="@drawable/num_two"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/bild3"
+        android:icon="@drawable/num_three"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/bild4"
+        android:icon="@drawable/num_four"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/bild5"
+        android:icon="@drawable/num_five"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/bild6"
+        android:icon="@drawable/num_six"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/bild7"
+        android:icon="@drawable/num_seven"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/bild8"
+        android:icon="@drawable/num_eight"
+        android:title=""
+        app:showAsAction="always" />
+
+
+</menu>
