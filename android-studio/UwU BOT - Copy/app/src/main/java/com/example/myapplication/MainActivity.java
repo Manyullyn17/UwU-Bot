@@ -1,11 +1,11 @@
 package com.example.myapplication;
 
-import android.Manifest;
+//import android.Manifest;
 import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothAdapter;
+//import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
-import android.content.pm.PackageManager;
+//import android.bluetooth.BluetoothSocket;
+//import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,18 +17,23 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+//import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+//import androidx.core.app.ActivityCompat;
 
 import com.example.joystick.JoystickView;
 import com.harrysoft.androidbluetoothserial.BluetoothManager;
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
+import com.harrysoft.androidbluetoothserial.SimpleBluetoothDeviceInterface;
 
-import java.io.IOException;
-import java.io.OutputStream;
+//import java.io.IOException;
+//import java.io.OutputStream;
 import java.util.Collection;
-import java.util.UUID;
+import java.util.Objects;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+//import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button button;
@@ -36,12 +41,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private JoystickView joystickViewL;
     TextView textL;
     TextView textR;
-
-
     int previousR;
     int previousL;
-
-
+    boolean connected = false;
+    BluetoothManager bluetoothManager;
     @SuppressLint({"ClickableViewAccessibility", "MissingPermission"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +69,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //try {
                             int y = (int)joystickViewR.getYPos();
                             if(y != previousR) {
-                                //previousR = y;
-                                //String txt = String.format("R %d\0", y);
-                                //textR.setText(txt);
+                                if(connected)
+                                    deviceInterface.sendMessage("Hi");
+                                previousR = y;
+                                String txt = String.format("R %d\0", y);
+                                textR.setText(txt);
                                 //outputStream.write(txt.getBytes());
                                 //outputStream.flush();
                             }
@@ -79,9 +84,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     case MotionEvent.ACTION_DOWN:
                         //try {
-                            //int y = (int)joystickViewR.getYPos();
-                            //String txt = String.format("R %d\0", y);
-                            //textR.setText(txt);
+                            y = (int)joystickViewR.getYPos();
+                            String txt = String.format("R %d\0", y);
+                            textR.setText(txt);
                             //outputStream.write(txt.getBytes());
                             //outputStream.flush();
                         //} catch (IOException e) {
@@ -91,9 +96,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     case MotionEvent.ACTION_UP:
                         //try {
-                            //previousR = 0;
-                            //String txt = "R 0\n";
-                            //textR.setText(txt);
+                            previousR = 0;
+                            txt = "R 0\n";
+                            textR.setText(txt);
                             //outputStream.write(txt.getBytes());
                             //outputStream.flush();
                         //} catch (IOException e) {
@@ -114,9 +119,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //try {
                             int y = (int)joystickViewL.getYPos();
                             if (y != previousL) {
-                                //previousL = y;
-                                //String txt = String.format("L %d\0", (int) y);
-                                //textL.setText(txt);
+                                previousL = y;
+                                String txt = String.format("L %d\0", (int) y);
+                                textL.setText(txt);
                                 //outputStream.write(txt.getBytes());
                                 //outputStream.flush();
                             }
@@ -127,9 +132,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     case MotionEvent.ACTION_DOWN:
                         //try {
-                            //int y = (int)joystickViewL.getYPos();
-                            //String txt = String.format("L %d\0", y);
-                            //textL.setText(txt);
+                            y = (int)joystickViewL.getYPos();
+                            String txt = String.format("L %d\0", y);
+                            textL.setText(txt);
                             //outputStream.write(txt.getBytes());
                             //outputStream.flush();
                         //} catch (IOException e) {
@@ -139,9 +144,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     case MotionEvent.ACTION_UP:
                         //try {
-                            //previousL = 0;
-                            //String txt = "L 0\n";
-                            //textL.setText(txt);
+                            previousL = 0;
+                            txt = "L 0\n";
+                            textL.setText(txt);
                             //outputStream.write(txt.getBytes());
                             //outputStream.flush();
                         //} catch (IOException e) {
@@ -154,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         // Setup our BluetoothManager
-        BluetoothManager bluetoothManager = BluetoothManager.getInstance();
+        bluetoothManager = BluetoothManager.getInstance();
         if (bluetoothManager == null) {
             // Bluetooth unavailable on this device :( tell the user
             Toast.makeText(this, "Bluetooth not available.", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
@@ -165,9 +170,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (BluetoothDevice device : pairedDevices) {
             Log.d("My Bluetooth App", "Device name: " + device.getName());
             Log.d("My Bluetooth App", "Device MAC Address: " + device.getAddress());
+
+            if (Objects.equals(device.getName(), "ESP32"))
+                connectDevice(bluetoothManager, device.getAddress());
         }
+
     }
 
+    private SimpleBluetoothDeviceInterface deviceInterface;
+
+    private void connectDevice(BluetoothManager bluetoothManager, String mac) {
+        bluetoothManager.openSerialDevice(mac)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onConnected, this::onError);
+    }
+
+    private void onConnected(BluetoothSerialDevice connectedDevice) {
+        Log.d("Connected", "True");
+        // You are now connected to this device!
+        // Here you may want to retain an instance to your device:
+        deviceInterface = connectedDevice.toSimpleDeviceInterface();
+
+        connected = true;
+
+        // Listen to bluetooth events
+        deviceInterface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
+
+        // Let's send a message:
+        deviceInterface.sendMessage("Hello world!");
+    }
+
+    private void onMessageSent(String message) {
+        // We sent a message! Handle it here.
+        Toast.makeText(this, "Sent a message! Message was: " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
+    }
+
+    private void onMessageReceived(String message) {
+        // We received a message! Handle it here.
+        Toast.makeText(this, "Received a message! Message was: " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
+    }
+
+    private void onError(Throwable error) {
+        // Handle the error
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -211,5 +257,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 popup.show();
                 break;
         }
+    }
+
+    protected void onDestroy(){
+        super.onDestroy();
+        // Disconnect all devices
+        bluetoothManager.close();
+
+        finish();
     }
 }

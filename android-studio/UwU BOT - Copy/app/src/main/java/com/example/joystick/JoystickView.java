@@ -36,8 +36,7 @@ public class JoystickView extends View {
         float x = event.getX();
         float y = event.getY();
         if(event.getAction() == MotionEvent.ACTION_UP) {
-            //y = centerY;
-            y = y;
+            y = centerY;
         } else {
             double abs = Math.sqrt((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY));
             if (abs > joystickRadius) {
@@ -64,7 +63,7 @@ public class JoystickView extends View {
     }
 
     public float getYPos() {
-        float y = map(centerY - yPos, -joystickRadius/2, joystickRadius/2, -100, 100)/2F;
+        float y = map(centerY - yPos, -joystickRadius/2.0f, joystickRadius/2.0f, -100, 100)/2F;
         return roundToNext5((int)y);
     }
 
