@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothDevice;
 //import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Process;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -39,12 +40,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button button;
     private JoystickView joystickViewR;
     private JoystickView joystickViewL;
+    private SimpleBluetoothDeviceInterface deviceInterface;
     TextView textL;
     TextView textR;
     int previousR;
     int previousL;
     boolean connected = false;
     BluetoothManager bluetoothManager;
+    String msg;
     @SuppressLint({"ClickableViewAccessibility", "MissingPermission"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,44 +69,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getActionMasked()) {
                     case MotionEvent.ACTION_MOVE:
-                        //try {
-                            int y = (int)joystickViewR.getYPos();
-                            if(y != previousR) {
-                                if(connected)
-                                    deviceInterface.sendMessage("Hi");
-                                previousR = y;
-                                String txt = String.format("R %d\0", y);
-                                textR.setText(txt);
-                                //outputStream.write(txt.getBytes());
-                                //outputStream.flush();
-                            }
-                        //} catch (IOException e) {
-                        //    Toast.makeText(MainActivity.this, "Couldn't send Data", Toast.LENGTH_SHORT).show();
-                        //}
+                        int y = (int)joystickViewR.getYPos();
+                        if(y != previousR) {
+                            previousR = y;
+                            String txt = String.format("R%d\0", y);
+                            textR.setText(txt);
+                            msg = txt;
+                        }
                         break;
 
                     case MotionEvent.ACTION_DOWN:
-                        //try {
-                            y = (int)joystickViewR.getYPos();
-                            String txt = String.format("R %d\0", y);
-                            textR.setText(txt);
-                            //outputStream.write(txt.getBytes());
-                            //outputStream.flush();
-                        //} catch (IOException e) {
-                        //    Toast.makeText(MainActivity.this, "Couldn't send Data", Toast.LENGTH_SHORT).show();
-                        //}
+                        y = (int)joystickViewR.getYPos();
+                        String txt = String.format("R%d\0", y);
+                        textR.setText(txt);
+                        msg = txt;
                         break;
 
                     case MotionEvent.ACTION_UP:
-                        //try {
-                            previousR = 0;
-                            txt = "R 0\n";
-                            textR.setText(txt);
-                            //outputStream.write(txt.getBytes());
-                            //outputStream.flush();
-                        //} catch (IOException e) {
-                        //    Toast.makeText(MainActivity.this, "Couldn't send Data", Toast.LENGTH_SHORT).show();
-                        //}
+                        previousR = 0;
+                        txt = "R0\0";
+                        textR.setText(txt);
+                        msg = txt;
                         break;
                 }
                 return false;
@@ -116,45 +102,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getActionMasked()) {
                     case MotionEvent.ACTION_MOVE:
-                        //try {
-                            int y = (int)joystickViewL.getYPos();
-                            if (y != previousL) {
-                                previousL = y;
-                                String txt = String.format("L %d\0", (int) y);
-                                textL.setText(txt);
-                                //outputStream.write(txt.getBytes());
-                                //outputStream.flush();
-                            }
-                        //} catch (IOException e) {
-                        //    Toast.makeText(MainActivity.this, "Couldn't send Data", Toast.LENGTH_SHORT).show();
-                        //}
+                        int y = (int)joystickViewL.getYPos();
+                        if (y != previousL) {
+                            previousL = y;
+                            String txt = String.format("L%d\0", (int) y);
+                            textL.setText(txt);
+                            msg = txt;
+                        }
                         break;
 
                     case MotionEvent.ACTION_DOWN:
-                        //try {
-                            y = (int)joystickViewL.getYPos();
-                            String txt = String.format("L %d\0", y);
-                            textL.setText(txt);
-                            //outputStream.write(txt.getBytes());
-                            //outputStream.flush();
-                        //} catch (IOException e) {
-                        //    Toast.makeText(MainActivity.this, "Couldn't send Data", Toast.LENGTH_SHORT).show();
-                        //}
+                        y = (int)joystickViewL.getYPos();
+                        String txt = String.format("L%d\0", y);
+                        textL.setText(txt);
+                        msg = txt;
                         break;
 
                     case MotionEvent.ACTION_UP:
-                        //try {
-                            previousL = 0;
-                            txt = "L 0\n";
-                            textL.setText(txt);
-                            //outputStream.write(txt.getBytes());
-                            //outputStream.flush();
-                        //} catch (IOException e) {
-                        //    Toast.makeText(MainActivity.this, "Couldn't send Data", Toast.LENGTH_SHORT).show();
-                        //}
+                        previousL = 0;
+                        txt = "L0\0";
+                        textL.setText(txt);
+                        msg = txt;
                         break;
                 }
                 return false;
+            }
+        });
+
+        Thread thread = new Thread(new Runnable() {
+            public void run(){
+                Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO);
+                Log.d("Thread", "Thread running");
+                while(true) {
+                    if (!Objects.equals(msg, "") && connected) {
+                        Log.d("Msg sent", "Msg was: " + msg);
+                        deviceInterface.sendMessage(msg);
+                        msg = "";
+                    }
+                }
             }
         });
 
@@ -175,9 +160,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 connectDevice(bluetoothManager, device.getAddress());
         }
 
+        thread.start();
     }
 
-    private SimpleBluetoothDeviceInterface deviceInterface;
 
     private void connectDevice(BluetoothManager bluetoothManager, String mac) {
         bluetoothManager.openSerialDevice(mac)
@@ -203,12 +188,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void onMessageSent(String message) {
         // We sent a message! Handle it here.
-        Toast.makeText(this, "Sent a message! Message was: " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
+        //Toast.makeText(this, "Sent a message! Message was: " + message, Toast.LENGTH_LONG).show();
     }
 
     private void onMessageReceived(String message) {
         // We received a message! Handle it here.
-        Toast.makeText(this, "Received a message! Message was: " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
+        Toast.makeText(this, "Received a message! Message was: " + message, Toast.LENGTH_LONG).show();
     }
 
     private void onError(Throwable error) {
@@ -225,27 +210,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         switch (item.getItemId()){
                             case R.id.bild1:
                                 Toast.makeText(MainActivity.this, "Erstes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                if (connected)
+                                    deviceInterface.sendMessage("F1");
                                 break;
                             case R.id.bild2:
                                 Toast.makeText(MainActivity.this, "Zweites Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                if (connected)
+                                    deviceInterface.sendMessage("F2");
                                 break;
                             case R.id.bild3:
                                 Toast.makeText(MainActivity.this, "Drittes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                if (connected)
+                                    deviceInterface.sendMessage("F3");
                                 break;
                             case R.id.bild4:
                                 Toast.makeText(MainActivity.this, "Viertes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                if (connected)
+                                    deviceInterface.sendMessage("F4");
                                 break;
                             case R.id.bild5:
                                 Toast.makeText(MainActivity.this, "Fünftes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                if (connected)
+                                    deviceInterface.sendMessage("F5");
                                 break;
                             case R.id.bild6:
                                 Toast.makeText(MainActivity.this, "Sechstes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                if (connected)
+                                    deviceInterface.sendMessage("F6");
                                 break;
                             case R.id.bild7:
                                 Toast.makeText(MainActivity.this, "Siebtes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                if (connected)
+                                    deviceInterface.sendMessage("F7");
                                 break;
                             case R.id.bild8:
                                 Toast.makeText(MainActivity.this, "Achtes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                if (connected)
+                                    deviceInterface.sendMessage("F8");
                                 break;
                         }
                         return true;
