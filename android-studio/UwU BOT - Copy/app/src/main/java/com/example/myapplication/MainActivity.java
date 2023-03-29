@@ -74,7 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             previousR = y;
                             String txt = String.format("R%d\0", y);
                             textR.setText(txt);
-                            msg = txt;
+                            if (connected)
+                                msg = txt;
                         }
                         break;
 
@@ -82,14 +83,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         y = (int)joystickViewR.getYPos();
                         String txt = String.format("R%d\0", y);
                         textR.setText(txt);
-                        msg = txt;
+                        if (connected)
+                            msg = txt;
                         break;
 
                     case MotionEvent.ACTION_UP:
                         previousR = 0;
                         txt = "R0\0";
                         textR.setText(txt);
-                        msg = txt;
+                        if (connected)
+                            msg = txt;
                         break;
                 }
                 return false;
@@ -107,7 +110,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             previousL = y;
                             String txt = String.format("L%d\0", (int) y);
                             textL.setText(txt);
-                            msg = txt;
+                            if (connected)
+                                msg = txt;
                         }
                         break;
 
@@ -115,14 +119,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         y = (int)joystickViewL.getYPos();
                         String txt = String.format("L%d\0", y);
                         textL.setText(txt);
-                        msg = txt;
+                        if (connected)
+                            msg = txt;
                         break;
 
                     case MotionEvent.ACTION_UP:
                         previousL = 0;
                         txt = "L0\0";
                         textL.setText(txt);
-                        msg = txt;
+                        if (connected)
+                            msg = txt;
                         break;
                 }
                 return false;
@@ -178,12 +184,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deviceInterface = connectedDevice.toSimpleDeviceInterface();
 
         connected = true;
+        Toast.makeText(this, "Connected.", Toast.LENGTH_SHORT).show();
 
         // Listen to bluetooth events
         deviceInterface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
 
         // Let's send a message:
-        deviceInterface.sendMessage("Hello world!");
+        //deviceInterface.sendMessage("Hello world!");
     }
 
     private void onMessageSent(String message) {
@@ -211,42 +218,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             case R.id.bild1:
                                 Toast.makeText(MainActivity.this, "Erstes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
                                 if (connected)
-                                    deviceInterface.sendMessage("F1");
+                                    //deviceInterface.sendMessage("F1");
+                                    msg = "F1";
                                 break;
                             case R.id.bild2:
                                 Toast.makeText(MainActivity.this, "Zweites Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
                                 if (connected)
-                                    deviceInterface.sendMessage("F2");
+                                    //deviceInterface.sendMessage("F2");
+                                    msg = "F2";
                                 break;
                             case R.id.bild3:
                                 Toast.makeText(MainActivity.this, "Drittes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
                                 if (connected)
-                                    deviceInterface.sendMessage("F3");
+                                    //deviceInterface.sendMessage("F3");
+                                    msg = "F3";
                                 break;
                             case R.id.bild4:
                                 Toast.makeText(MainActivity.this, "Viertes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
                                 if (connected)
-                                    deviceInterface.sendMessage("F4");
+                                    //deviceInterface.sendMessage("F4");
+                                    msg = "F4";
                                 break;
                             case R.id.bild5:
                                 Toast.makeText(MainActivity.this, "Fünftes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
                                 if (connected)
-                                    deviceInterface.sendMessage("F5");
+                                    //deviceInterface.sendMessage("F5");
+                                    msg = "F5";
                                 break;
                             case R.id.bild6:
                                 Toast.makeText(MainActivity.this, "Sechstes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
                                 if (connected)
-                                    deviceInterface.sendMessage("F6");
+                                    //deviceInterface.sendMessage("F6");
+                                    msg = "F6";
                                 break;
                             case R.id.bild7:
                                 Toast.makeText(MainActivity.this, "Siebtes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
                                 if (connected)
-                                    deviceInterface.sendMessage("F7");
+                                    //deviceInterface.sendMessage("F7");
+                                    msg = "F7";
                                 break;
                             case R.id.bild8:
                                 Toast.makeText(MainActivity.this, "Achtes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
                                 if (connected)
-                                    deviceInterface.sendMessage("F8");
+                                    //deviceInterface.sendMessage("F8");
+                                    msg = "F8";
                                 break;
                         }
                         return true;
