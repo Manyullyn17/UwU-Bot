@@ -216,49 +216,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.bild1:
-                                Toast.makeText(MainActivity.this, "Erstes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "UwU" , Toast.LENGTH_SHORT).show();
                                 if (connected)
                                     //deviceInterface.sendMessage("F1");
                                     msg = "F1";
                                 break;
                             case R.id.bild2:
-                                Toast.makeText(MainActivity.this, "Zweites Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Happy" , Toast.LENGTH_SHORT).show();
                                 if (connected)
                                     //deviceInterface.sendMessage("F2");
                                     msg = "F2";
                                 break;
                             case R.id.bild3:
-                                Toast.makeText(MainActivity.this, "Drittes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Angry" , Toast.LENGTH_SHORT).show();
                                 if (connected)
                                     //deviceInterface.sendMessage("F3");
                                     msg = "F3";
                                 break;
                             case R.id.bild4:
-                                Toast.makeText(MainActivity.this, "Viertes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Love" , Toast.LENGTH_SHORT).show();
                                 if (connected)
                                     //deviceInterface.sendMessage("F4");
                                     msg = "F4";
                                 break;
                             case R.id.bild5:
-                                Toast.makeText(MainActivity.this, "Fünftes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Sleepy" , Toast.LENGTH_SHORT).show();
                                 if (connected)
                                     //deviceInterface.sendMessage("F5");
                                     msg = "F5";
                                 break;
                             case R.id.bild6:
-                                Toast.makeText(MainActivity.this, "Sechstes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Sad" , Toast.LENGTH_SHORT).show();
                                 if (connected)
                                     //deviceInterface.sendMessage("F6");
                                     msg = "F6";
                                 break;
                             case R.id.bild7:
-                                Toast.makeText(MainActivity.this, "Siebtes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Scared" , Toast.LENGTH_SHORT).show();
                                 if (connected)
                                     //deviceInterface.sendMessage("F7");
                                     msg = "F7";
                                 break;
                             case R.id.bild8:
-                                Toast.makeText(MainActivity.this, "Achtes Bild wurde gedrückt" , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Surprised" , Toast.LENGTH_SHORT).show();
                                 if (connected)
                                     //deviceInterface.sendMessage("F8");
                                     msg = "F8";
