@@ -11,7 +11,7 @@
 
 #define MAX_SPEED 500  // max speed for motors
 
-#define MS1_PIN 4
+#define MS1_PIN 0
 #define MS2_PIN 5
 #define MS3_PIN 19
 
@@ -23,13 +23,6 @@ P3RGB64x32MatrixPanel matrix;
 BluetoothSerial ESP_BT;
 
 TaskHandle_t MotorDriver; // task to drive motors
-TaskHandle_t LedDriver;
-
-int faceId, prevId;
-
-// use this constructor for custom pin wiring instead of the default above
-// these pins are an example, you may modify this according to your needs
-//P3RGB64x32MatrixPanel matrix(25, 26, 27, 21, 22, 23, 15, 32, 33, 12, 16, 17, 18);
 
 const unsigned char UwU[] PROGMEM = {
   // 'UwU face', 64x32px
@@ -250,24 +243,9 @@ void motorRun(void* parameter)  // Task to run motors (runs on separate core)
   }
 }
 
-/*void matrixRun(void* parameter)
-{
-  matrix.begin();
-  Serial.println("matrixRun");
-  while(true)
-  {
-    if (faceId != prevId)
-    {
-      Serial.println("if success");
-      prevId = faceId;
-      drawFace(faceId);
-    }
-  }
-}*/
 
 void setup() {
   ESP_BT.begin("ESP32");  // set the name of the device
-  //ESP_BT.println("Bluetooth device is ready to pair");
   Serial.begin(9600);     // for debugging purposes
   
   rmotor.setMaxSpeed(MAX_SPEED);
@@ -284,15 +262,6 @@ void setup() {
     &MotorDriver,           // Task handle
     0);                     // Core where the task should run
 
-  /*xTaskCreatePinnedToCore(  // run Task motorDriver on Core 0
-    matrixRun,               // Function to implement the task
-    "LedDriver",            // Name of the task
-    10000,                  // Stack size in words
-    NULL,                   // Task input parameter
-    0,                      // Priority of the task
-    &LedDriver,             // Task handle
-    1);*/                     // Core where the task should run
-
   pinMode(MS1_PIN, OUTPUT);
   pinMode(MS2_PIN, OUTPUT);
   pinMode(MS3_PIN, OUTPUT);
@@ -302,9 +271,8 @@ void setup() {
   digitalWrite(MS2_PIN, LOW);
   digitalWrite(MS3_PIN, LOW);
 
-  //drawFace(1);  // draw default Face (UwU)
-  //faceId = 1;
   matrix.begin();
+  drawFace(1);  // draw default Face (UwU)
 }
 
 void loop() {
@@ -322,13 +290,10 @@ void loop() {
       Serial.print("Face ");
       Serial.println(face);
       drawFace(face);
-      //faceId = 1;
     }
     else if (cmd == 'R') {
       rval = incomingData.toInt();  // speed of rmotor in percent
       rspeed = (MAX_SPEED / 100.0) * rval;  // convert percent to absolute speed
-      Serial.print("rval ");
-      Serial.println(rval);
       Serial.print("Speed ");
       Serial.println(rspeed);
       rmotor.setSpeed(rspeed);
@@ -336,8 +301,6 @@ void loop() {
     else if (cmd == 'L') {
       lval = -incomingData.toInt();  // speed of lmotor in percent
       lspeed = (MAX_SPEED / 100.0) * lval;  // convert percent to absolute speed
-      Serial.print("lval ");
-      Serial.println(lval);
       Serial.print("Speed ");
       Serial.println(lspeed);
       lmotor.setSpeed(lspeed);
