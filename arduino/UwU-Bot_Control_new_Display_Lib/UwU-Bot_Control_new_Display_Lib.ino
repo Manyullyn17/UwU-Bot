@@ -1,7 +1,8 @@
-#include <Adafruit_GFX.h>  // Core Graphics Library
-#include <P3RGB64x32MatrixPanel.h>
+#include <Adafruit_GFX.h>     // Core Graphics Library
 #include <BluetoothSerial.h>  // Bluetooth Library
 #include <AccelStepper.h>     // StepperMotor Controller Library
+#include <ESP32-HUB75-MatrixPanel-I2S-DMA.h>
+#include <ESP32-VirtualMatrixPanel-I2S-DMA.h>
 
 #define RMOTOR_DIR_PIN 2
 #define RMOTOR_STEP_PIN 4
@@ -15,14 +16,40 @@
 #define MS2_PIN 5
 #define MS3_PIN 19
 
+// Display Pins
+#define R1_PIN 25
+#define G1_PIN 26
+#define B1_PIN 27
+#define R2_PIN 21
+#define G2_PIN 22
+#define B2_PIN 23
+
+#define A_PIN 12
+#define B_PIN 16
+#define C_PIN 17
+#define D_PIN 18
+#define E_PIN -1
+
+#define LAT_PIN 32
+#define OE_PIN 33
+#define CLK_PIN 15
+
 AccelStepper rmotor(AccelStepper::DRIVER, RMOTOR_STEP_PIN, RMOTOR_DIR_PIN);
 AccelStepper lmotor(AccelStepper::DRIVER, LMOTOR_STEP_PIN, LMOTOR_DIR_PIN);
 
-P3RGB64x32MatrixPanel matrix;
+//MatrixPanel_I2S_DMA *dma_display = nullptr;
+HUB75_I2S_CFG::i2s_pins _pins = { R1_PIN, G1_PIN, B1_PIN, R2_PIN, G2_PIN, B2_PIN, A_PIN, B_PIN, C_PIN, D_PIN, E_PIN, LAT_PIN, OE_PIN, CLK_PIN };
+HUB75_I2S_CFG mxconfig(
+  64,     // Module width
+  32,     // Module height
+  1,      // chain length
+  _pins  // pin mapping
+);
+MatrixPanel_I2S_DMA *dma_display = new MatrixPanel_I2S_DMA(mxconfig);
 
 BluetoothSerial ESP_BT;
 
-TaskHandle_t MotorDriver; // task to drive motors
+TaskHandle_t MotorDriver;  // task to drive motors
 
 const unsigned char UwU[] PROGMEM = {
   // 'UwU face', 64x32px
@@ -185,51 +212,51 @@ const unsigned char angry[] PROGMEM = {
 };
 
 void drawFace(int id) {
-  matrix.fillScreen(matrix.color444(0, 0, 0));  // clear screen
+  dma_display->clearScreen();
 
   switch (id) {  // draw face matching id
     case 1:      // UwU
-      matrix.drawBitmap(0, 0, UwU, 64, 32, matrix.color444(15, 0, 15));
+      dma_display->drawBitmap(0, 0, UwU, 64, 32, dma_display->color444(15, 0, 15));
       Serial.println("UwU");
       break;
 
     case 2:  // happy
-      matrix.drawBitmap(0, 0, happy, 64, 32, matrix.color444(15, 8, 0));
+      dma_display->drawBitmap(0, 0, happy, 64, 32, dma_display->color444(15, 8, 0));
       Serial.println("happy");
       break;
 
     case 3:  // angry
-      matrix.drawBitmap(0, 0, angry, 64, 32, matrix.color444(15, 0, 0));
+      dma_display->drawBitmap(0, 0, angry, 64, 32, dma_display->color444(15, 0, 0));
       Serial.println("angry");
       break;
 
     case 4:  // love
-      matrix.drawBitmap(0, 0, love, 64, 32, matrix.color444(15, 0, 1));
+      dma_display->drawBitmap(0, 0, love, 64, 32, dma_display->color444(15, 0, 1));
       Serial.println("love");
       break;
 
     case 5:  // sleepy
-      matrix.drawBitmap(0, 0, sleepy, 64, 32, matrix.color444(7, 4, 4));
+      dma_display->drawBitmap(0, 0, sleepy, 64, 32, dma_display->color444(7, 4, 4));
       Serial.println("sleepy");
       break;
 
     case 6:  // sad
-      matrix.drawBitmap(0, 0, sad, 64, 32, matrix.color444(0, 0, 15));
+      dma_display->drawBitmap(0, 0, sad, 64, 32, dma_display->color444(0, 0, 15));
       Serial.println("sad");
       break;
 
     case 7:  // scared
-      matrix.drawBitmap(0, 0, scared, 64, 32, matrix.color444(0, 7, 0));
+      dma_display->drawBitmap(0, 0, scared, 64, 32, dma_display->color444(0, 7, 0));
       Serial.println("scared");
       break;
 
     case 8:  // surprised
-      matrix.drawBitmap(0, 0, suprised, 64, 32, matrix.color444(15, 1, 0));
+      dma_display->drawBitmap(0, 0, suprised, 64, 32, dma_display->color444(15, 1, 0));
       Serial.println("surprised");
       break;
 
     default:  // default = UwU
-      matrix.drawBitmap(0, 0, UwU, 64, 32, matrix.color444(15, 0, 15));
+      dma_display->drawBitmap(0, 0, UwU, 64, 32, dma_display->color444(15, 0, 15));
       Serial.println("default = UwU");
       break;
   }
@@ -246,7 +273,7 @@ void motorRun(void* parameter)  // Task to run motors (runs on separate core)
 void setup() {
   ESP_BT.begin("ESP32");  // set the name of the device
   Serial.begin(9600);     // for debugging purposes
-  
+
   rmotor.setMaxSpeed(MAX_SPEED);
   lmotor.setMaxSpeed(MAX_SPEED);
   rmotor.setSpeed(0);
@@ -261,7 +288,7 @@ void setup() {
     &MotorDriver,           // Task handle
     0);                     // Core where the task should run
 
-  
+
   pinMode(MS1_PIN, OUTPUT);
   pinMode(MS2_PIN, OUTPUT);
   pinMode(MS3_PIN, OUTPUT);
@@ -270,13 +297,14 @@ void setup() {
   digitalWrite(MS1_PIN, LOW);
   digitalWrite(MS2_PIN, HIGH);
   digitalWrite(MS3_PIN, LOW);
-  
-  //matrix.begin();
+
+  dma_display->begin();
+  dma_display->setBrightness(90); // 0-255
 }
 
 void loop() {
   if (ESP_BT.available()) {
-    String incomingData = ESP_BT.readStringUntil('\0'); // read incoming data
+    String incomingData = ESP_BT.readStringUntil('\0');  // read incoming data
     Serial.println(incomingData);
 
     char cmd = incomingData.charAt(0);  // get cmd from incomingData
@@ -289,18 +317,16 @@ void loop() {
       Serial.print("Face ");
       Serial.println(face);
       drawFace(face);
-    }
-    else if (cmd == 'R') {
-      rval = incomingData.toInt();  // speed of rmotor in percent
+    } else if (cmd == 'R') {
+      rval = incomingData.toInt();          // speed of rmotor in percent
       rspeed = (MAX_SPEED / 100.0) * rval;  // convert percent to absolute speed
       Serial.print("rval ");
       Serial.println(rval);
       Serial.print("Speed ");
       Serial.println(rspeed);
       rmotor.setSpeed(rspeed);
-    }
-    else if (cmd == 'L') {
-      lval = -incomingData.toInt();  // speed of lmotor in percent
+    } else if (cmd == 'L') {
+      lval = -incomingData.toInt();         // speed of lmotor in percent
       lspeed = (MAX_SPEED / 100.0) * lval;  // convert percent to absolute speed
       Serial.print("lval ");
       Serial.println(lval);
