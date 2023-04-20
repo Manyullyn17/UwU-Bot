@@ -6,12 +6,12 @@
 #define RMOTOR_DIR_PIN 2
 #define RMOTOR_STEP_PIN 4
 
-#define LMOTOR_DIR_PIN 13
-#define LMOTOR_STEP_PIN 14
+#define LMOTOR_DIR_PIN 14
+#define LMOTOR_STEP_PIN 13
 
 #define MAX_SPEED 500  // max speed for motors
 
-#define MS1_PIN 4
+#define MS1_PIN 0
 #define MS2_PIN 5
 #define MS3_PIN 19
 
@@ -250,21 +250,6 @@ void motorRun(void* parameter)  // Task to run motors (runs on separate core)
   }
 }
 
-/*void matrixRun(void* parameter)
-{
-  matrix.begin();
-  Serial.println("matrixRun");
-  while(true)
-  {
-    if (faceId != prevId)
-    {
-      Serial.println("if success");
-      prevId = faceId;
-      drawFace(faceId);
-    }
-  }
-}*/
-
 void setup() {
   ESP_BT.begin("ESP32");  // set the name of the device
   //ESP_BT.println("Bluetooth device is ready to pair");
@@ -284,27 +269,17 @@ void setup() {
     &MotorDriver,           // Task handle
     0);                     // Core where the task should run
 
-  /*xTaskCreatePinnedToCore(  // run Task motorDriver on Core 0
-    matrixRun,               // Function to implement the task
-    "LedDriver",            // Name of the task
-    10000,                  // Stack size in words
-    NULL,                   // Task input parameter
-    0,                      // Priority of the task
-    &LedDriver,             // Task handle
-    1);*/                     // Core where the task should run
-
+  
   pinMode(MS1_PIN, OUTPUT);
   pinMode(MS2_PIN, OUTPUT);
   pinMode(MS3_PIN, OUTPUT);
 
   // Microstepping
   digitalWrite(MS1_PIN, LOW);
-  digitalWrite(MS2_PIN, LOW);
+  digitalWrite(MS2_PIN, HIGH);
   digitalWrite(MS3_PIN, LOW);
-
-  //drawFace(1);  // draw default Face (UwU)
-  //faceId = 1;
-  matrix.begin();
+  
+  //matrix.begin();
 }
 
 void loop() {
@@ -322,7 +297,6 @@ void loop() {
       Serial.print("Face ");
       Serial.println(face);
       drawFace(face);
-      //faceId = 1;
     }
     else if (cmd == 'R') {
       rval = incomingData.toInt();  // speed of rmotor in percent

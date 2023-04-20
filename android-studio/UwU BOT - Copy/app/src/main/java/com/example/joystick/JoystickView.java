@@ -64,19 +64,19 @@ public class JoystickView extends View {
 
     public float getYPos() {
         float y = map(centerY - yPos, -joystickRadius/2.0f, joystickRadius/2.0f, -100, 100)/2F;
-        return roundToNext5((int)y);
+        return roundToNext10((int)y);
     }
 
     private float map(float x, float in_min, float in_max, float out_min, float out_max) {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
 
-    private static int roundToNext5(int num) {
-        int remainder = num % 5;
+    private static int roundToNext10(int num) {
+        int remainder = num % 10;
         if (remainder == 0) {
             return num;
         }
-        return num + (5 - remainder);
+        return num + (10 - remainder);
     }
 }
 
