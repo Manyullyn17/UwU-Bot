@@ -1066,30 +1066,6 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <label x="104.14" y="139.7" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$1" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="GND3"/>
-<wire x1="149.86" y1="162.56" x2="154.94" y2="162.56" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$4" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="TXD0"/>
-<wire x1="149.86" y1="154.94" x2="154.94" y2="154.94" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$5" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="RXD0"/>
-<wire x1="149.86" y1="152.4" x2="154.94" y2="152.4" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$7" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="GND2"/>
-<wire x1="149.86" y1="147.32" x2="154.94" y2="147.32" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="IO19" class="0">
 <segment>
 <pinref part="ESP32" gate="G$1" pin="IO19"/>
@@ -1141,36 +1117,6 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <label x="17.78" y="93.98" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$14" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="IO0"/>
-<wire x1="149.86" y1="129.54" x2="154.94" y2="129.54" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$15" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="IO2"/>
-<wire x1="149.86" y1="127" x2="154.94" y2="127" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$17" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="SD1"/>
-<wire x1="149.86" y1="121.92" x2="154.94" y2="121.92" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$18" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="SD0"/>
-<wire x1="149.86" y1="119.38" x2="154.94" y2="119.38" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$19" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="CLK"/>
-<wire x1="149.86" y1="116.84" x2="154.94" y2="116.84" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="3V3" class="0">
 <segment>
 <pinref part="ESP32" gate="G$1" pin="3V3"/>
@@ -1186,42 +1132,6 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="VDD"/>
 <wire x1="58.42" y1="116.84" x2="66.04" y2="116.84" width="0.1524" layer="91"/>
 <label x="60.96" y="116.84" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$21" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="EN"/>
-<wire x1="109.22" y1="160.02" x2="104.14" y2="160.02" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$22" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="SENSOR_VP"/>
-<wire x1="109.22" y1="157.48" x2="104.14" y2="157.48" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$23" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="SENSOR_VN"/>
-<wire x1="109.22" y1="154.94" x2="104.14" y2="154.94" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$35" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="SD2"/>
-<wire x1="109.22" y1="124.46" x2="104.14" y2="124.46" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$36" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="SD3"/>
-<wire x1="109.22" y1="121.92" x2="104.14" y2="121.92" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$37" class="0">
-<segment>
-<pinref part="ESP32" gate="G$1" pin="CMD"/>
-<wire x1="109.22" y1="119.38" x2="104.14" y2="119.38" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$2" class="0">
@@ -1240,18 +1150,6 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <wire x1="20.32" y1="106.68" x2="20.32" y2="104.14" width="0.1524" layer="91"/>
 <pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="!SLEEP"/>
 <wire x1="20.32" y1="104.14" x2="22.86" y2="104.14" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="12V" class="0">
-<segment>
-<pinref part="STEPPER_MOTOR_DRIVER1" gate="G$1" pin="VMOT"/>
-<wire x1="58.42" y1="160.02" x2="66.04" y2="160.02" width="0.1524" layer="91"/>
-<label x="60.96" y="160.02" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="VMOT"/>
-<wire x1="58.42" y1="114.3" x2="66.04" y2="114.3" width="0.1524" layer="91"/>
-<label x="60.96" y="114.3" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="STEP" class="0">
@@ -1302,20 +1200,6 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <label x="104.14" y="149.86" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$24" class="0">
-<segment>
-<pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="1A"/>
-<pinref part="MOTOR2" gate="1" pin="4"/>
-<wire x1="58.42" y1="109.22" x2="71.12" y2="109.22" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$25" class="0">
-<segment>
-<pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="1B"/>
-<pinref part="MOTOR2" gate="1" pin="3"/>
-<wire x1="58.42" y1="106.68" x2="71.12" y2="106.68" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="N$26" class="0">
 <segment>
 <pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="2A"/>
@@ -1344,24 +1228,31 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <wire x1="58.42" y1="149.86" x2="71.12" y2="149.86" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$30" class="0">
-<segment>
-<pinref part="STEPPER_MOTOR_DRIVER1" gate="G$1" pin="1B"/>
-<pinref part="MOTOR1" gate="1" pin="3"/>
-<wire x1="58.42" y1="152.4" x2="71.12" y2="152.4" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$31" class="0">
-<segment>
-<pinref part="STEPPER_MOTOR_DRIVER1" gate="G$1" pin="1A"/>
-<pinref part="MOTOR1" gate="1" pin="4"/>
-<wire x1="58.42" y1="154.94" x2="71.12" y2="154.94" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$32" class="0">
+<net name="VIN" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="VIN"/>
 <wire x1="220.98" y1="157.48" x2="215.9" y2="157.48" width="0.1524" layer="91"/>
+<label x="215.9" y="157.48" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="P$3"/>
+<wire x1="205.74" y1="116.84" x2="210.82" y2="116.84" width="0.1524" layer="91"/>
+<label x="208.28" y="116.84" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="P$4"/>
+<wire x1="205.74" y1="106.68" x2="210.82" y2="106.68" width="0.1524" layer="91"/>
+<label x="208.28" y="106.68" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="VMOT"/>
+<wire x1="58.42" y1="114.3" x2="66.04" y2="114.3" width="0.1524" layer="91"/>
+<label x="60.96" y="114.3" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="STEPPER_MOTOR_DRIVER1" gate="G$1" pin="VMOT"/>
+<wire x1="58.42" y1="160.02" x2="66.04" y2="160.02" width="0.1524" layer="91"/>
+<label x="60.96" y="160.02" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="VOUT" class="0">
@@ -1376,21 +1267,76 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <label x="104.14" y="116.84" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$10" class="0">
+<net name="N$1" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="P$3"/>
-<wire x1="205.74" y1="116.84" x2="210.82" y2="116.84" width="0.1524" layer="91"/>
+<pinref part="STEPPER_MOTOR_DRIVER1" gate="G$1" pin="1B"/>
+<wire x1="58.42" y1="152.4" x2="66.04" y2="152.4" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="152.4" x2="66.04" y2="154.94" width="0.1524" layer="91"/>
+<pinref part="MOTOR1" gate="1" pin="4"/>
+<wire x1="66.04" y1="154.94" x2="71.12" y2="154.94" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$11" class="0">
+<net name="1A" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="P$4"/>
-<wire x1="205.74" y1="106.68" x2="210.82" y2="106.68" width="0.1524" layer="91"/>
+<pinref part="MOTOR1" gate="1" pin="3"/>
+<wire x1="71.12" y1="152.4" x2="68.58" y2="152.4" width="0.1524" layer="91"/>
+<label x="68.58" y="152.4" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="STEPPER_MOTOR_DRIVER1" gate="G$1" pin="1A"/>
+<wire x1="58.42" y1="154.94" x2="60.96" y2="154.94" width="0.1524" layer="91"/>
+<label x="58.42" y="154.94" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$4" class="0">
+<segment>
+<pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="1B"/>
+<wire x1="58.42" y1="106.68" x2="66.04" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="106.68" x2="66.04" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="MOTOR2" gate="1" pin="4"/>
+<wire x1="66.04" y1="109.22" x2="71.12" y2="109.22" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="1A#2" class="0">
+<segment>
+<pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="1A"/>
+<wire x1="58.42" y1="109.22" x2="60.96" y2="109.22" width="0.1524" layer="91"/>
+<label x="58.42" y="109.22" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="MOTOR2" gate="1" pin="3"/>
+<wire x1="71.12" y1="106.68" x2="68.58" y2="106.68" width="0.1524" layer="91"/>
+<label x="66.04" y="106.68" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="202,1,109.22,160.02,ESP32,EN,,,,"/>
+<approved hash="202,1,109.22,157.48,ESP32,SENSOR_VP,,,,"/>
+<approved hash="202,1,109.22,154.94,ESP32,SENSOR_VN,,,,"/>
+<approved hash="104,1,109.22,129.54,ESP32,GND1,GND,,,"/>
+<approved hash="104,1,109.22,116.84,ESP32,EXT_5V,VOUT,,,"/>
+<approved hash="202,1,149.86,116.84,ESP32,CLK,,,,"/>
+<approved hash="204,1,149.86,147.32,ESP32,GND2,,,,"/>
+<approved hash="202,1,149.86,152.4,ESP32,RXD0,,,,"/>
+<approved hash="204,1,149.86,162.56,ESP32,GND3,,,,"/>
+<approved hash="202,1,22.86,154.94,STEPPER_MOTOR_DRIVER1,!ENABLE,,,,"/>
+<approved hash="104,1,58.42,162.56,STEPPER_MOTOR_DRIVER1,VDD,3V3,,,"/>
+<approved hash="104,1,58.42,160.02,STEPPER_MOTOR_DRIVER1,VMOT,VIN,,,"/>
+<approved hash="202,1,22.86,109.22,STEPPER_MOTOR_DRIVER2,!ENABLE,,,,"/>
+<approved hash="104,1,58.42,116.84,STEPPER_MOTOR_DRIVER2,VDD,3V3,,,"/>
+<approved hash="104,1,58.42,114.3,STEPPER_MOTOR_DRIVER2,VMOT,VIN,,,"/>
+<approved hash="209,1,22.86,149.86,N$2,,,,,"/>
+<approved hash="209,1,22.86,152.4,N$2,,,,,"/>
+<approved hash="209,1,22.86,106.68,N$3,,,,,"/>
+<approved hash="209,1,22.86,104.14,N$3,,,,,"/>
+<approved hash="113,1,131.976,90.066,FRAME1,,,,,"/>
+<approved hash="113,1,190.5,150.15,DISPLAY_CON,,,,,"/>
+<approved hash="113,1,74.9723,152.69,MOTOR1,,,,,"/>
+<approved hash="113,1,74.9723,106.97,MOTOR2,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 <compatibility>

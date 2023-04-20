@@ -753,6 +753,54 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 </deviceset>
 </devicesets>
 </library>
+<library name="buchse">
+<packages>
+<package name="BUCHSE">
+<wire x1="0" y1="0" x2="14.6" y2="0" width="0.1524" layer="21"/>
+<wire x1="14.6" y1="0" x2="14.6" y2="8.9" width="0.1524" layer="21"/>
+<wire x1="14.6" y1="8.9" x2="0" y2="8.9" width="0.1524" layer="21"/>
+<wire x1="0" y1="8.9" x2="0" y2="0" width="0.1524" layer="21"/>
+<smd name="P$1" x="5" y="9.95" dx="3" dy="2" layer="1" rot="R90"/>
+<smd name="P$2" x="9.7" y="9.95" dx="3" dy="2" layer="1" rot="R90"/>
+<smd name="P$3" x="5" y="-1.05" dx="3" dy="2" layer="1" rot="R90"/>
+<smd name="P$4" x="9.7" y="-1.05" dx="3" dy="2" layer="1" rot="R90"/>
+<text x="3.81" y="3.81" size="1.778" layer="21">socket</text>
+</package>
+</packages>
+<symbols>
+<symbol name="BUCHSE">
+<wire x1="0" y1="0" x2="20.32" y2="0" width="0.1524" layer="94"/>
+<wire x1="20.32" y1="0" x2="20.32" y2="25.4" width="0.1524" layer="94"/>
+<wire x1="20.32" y1="25.4" x2="0" y2="25.4" width="0.1524" layer="94"/>
+<wire x1="0" y1="25.4" x2="0" y2="0" width="0.1524" layer="94"/>
+<pin name="P$1" x="-5.08" y="7.62" length="middle"/>
+<pin name="P$2" x="-5.08" y="17.78" length="middle"/>
+<pin name="P$3" x="25.4" y="17.78" length="middle" rot="R180"/>
+<pin name="P$4" x="25.4" y="7.62" length="middle" rot="R180"/>
+<text x="7.62" y="0" size="1.778" layer="94">socket</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="BUCHSE">
+<gates>
+<gate name="G$1" symbol="BUCHSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="DC" package="BUCHSE">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+<connect gate="G$1" pin="P$3" pad="P$3"/>
+<connect gate="G$1" pin="P$4" pad="P$4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -771,6 +819,7 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <part name="STEPPER_MOTOR_DRIVER1" library="A4988_STEPPER_MOTOR_DRIVER_CARRIER_BLACK" deviceset="A4988_STEPPER_MOTOR_DRIVER_CARRIER_BLACK" device=""/>
 <part name="STEPPER_MOTOR_DRIVER2" library="A4988_STEPPER_MOTOR_DRIVER_CARRIER_BLACK" deviceset="A4988_STEPPER_MOTOR_DRIVER_CARRIER_BLACK" device=""/>
 <part name="U1" library="DC-DC Converter" library_urn="urn:adsk.eagle:library:20810979" deviceset="173010535" device="" package3d_urn="urn:adsk.eagle:package:20779907/3"/>
+<part name="U$1" library="buchse" deviceset="BUCHSE" device="DC"/>
 </parts>
 <sheets>
 <sheet>
@@ -809,6 +858,7 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <attribute name="NAME" x="228.6" y="161.29" size="1.778" layer="95"/>
 <attribute name="VALUE" x="226.06" y="146.05" size="1.778" layer="96"/>
 </instance>
+<instance part="U$1" gate="G$1" x="180.34" y="99.06" smashed="yes"/>
 </instances>
 <busses>
 </busses>
@@ -993,6 +1043,16 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <wire x1="236.22" y1="144.78" x2="236.22" y2="139.7" width="0.1524" layer="91"/>
 <label x="236.22" y="139.7" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="P$1"/>
+<wire x1="175.26" y1="106.68" x2="170.18" y2="106.68" width="0.1524" layer="91"/>
+<label x="167.64" y="106.68" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="P$2"/>
+<wire x1="175.26" y1="116.84" x2="170.18" y2="116.84" width="0.1524" layer="91"/>
+<label x="167.64" y="116.84" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="IO26" class="0">
 <segment>
@@ -1030,22 +1090,55 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <wire x1="149.86" y1="147.32" x2="154.94" y2="147.32" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$8" class="0">
+<net name="IO19" class="0">
 <segment>
 <pinref part="ESP32" gate="G$1" pin="IO19"/>
 <wire x1="149.86" y1="144.78" x2="154.94" y2="144.78" width="0.1524" layer="91"/>
+<label x="149.86" y="144.78" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="STEPPER_MOTOR_DRIVER1" gate="G$1" pin="MS3"/>
+<wire x1="22.86" y1="134.62" x2="17.78" y2="134.62" width="0.1524" layer="91"/>
+<label x="17.78" y="134.62" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="MS3"/>
+<wire x1="22.86" y1="88.9" x2="17.78" y2="88.9" width="0.1524" layer="91"/>
+<label x="17.78" y="88.9" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$10" class="0">
+<net name="IO5" class="0">
 <segment>
 <pinref part="ESP32" gate="G$1" pin="IO5"/>
 <wire x1="149.86" y1="139.7" x2="154.94" y2="139.7" width="0.1524" layer="91"/>
+<label x="149.86" y="139.7" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="STEPPER_MOTOR_DRIVER1" gate="G$1" pin="MS2"/>
+<wire x1="22.86" y1="137.16" x2="17.78" y2="137.16" width="0.1524" layer="91"/>
+<label x="17.78" y="137.16" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="MS2"/>
+<wire x1="22.86" y1="91.44" x2="17.78" y2="91.44" width="0.1524" layer="91"/>
+<label x="17.78" y="91.44" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$13" class="0">
+<net name="IO4" class="0">
 <segment>
 <pinref part="ESP32" gate="G$1" pin="IO4"/>
 <wire x1="149.86" y1="132.08" x2="154.94" y2="132.08" width="0.1524" layer="91"/>
+<label x="149.86" y="132.08" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="STEPPER_MOTOR_DRIVER1" gate="G$1" pin="MS1"/>
+<wire x1="22.86" y1="139.7" x2="17.78" y2="139.7" width="0.1524" layer="91"/>
+<label x="17.78" y="139.7" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="MS1"/>
+<wire x1="22.86" y1="93.98" x2="17.78" y2="93.98" width="0.1524" layer="91"/>
+<label x="17.78" y="93.98" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$14" class="0">
@@ -1209,42 +1302,6 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <label x="104.14" y="149.86" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$6" class="0">
-<segment>
-<pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="MS1"/>
-<wire x1="22.86" y1="93.98" x2="17.78" y2="93.98" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$9" class="0">
-<segment>
-<pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="MS2"/>
-<wire x1="22.86" y1="91.44" x2="17.78" y2="91.44" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$11" class="0">
-<segment>
-<pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="MS3"/>
-<wire x1="22.86" y1="88.9" x2="17.78" y2="88.9" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$12" class="0">
-<segment>
-<pinref part="STEPPER_MOTOR_DRIVER1" gate="G$1" pin="MS3"/>
-<wire x1="22.86" y1="134.62" x2="17.78" y2="134.62" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$16" class="0">
-<segment>
-<pinref part="STEPPER_MOTOR_DRIVER1" gate="G$1" pin="MS2"/>
-<wire x1="22.86" y1="137.16" x2="17.78" y2="137.16" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$20" class="0">
-<segment>
-<pinref part="STEPPER_MOTOR_DRIVER1" gate="G$1" pin="MS1"/>
-<wire x1="22.86" y1="139.7" x2="17.78" y2="139.7" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="N$24" class="0">
 <segment>
 <pinref part="STEPPER_MOTOR_DRIVER2" gate="G$1" pin="1A"/>
@@ -1301,10 +1358,21 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <wire x1="58.42" y1="154.94" x2="71.12" y2="154.94" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$32" class="0">
+<net name="VIN" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="VIN"/>
 <wire x1="220.98" y1="157.48" x2="215.9" y2="157.48" width="0.1524" layer="91"/>
+<label x="215.9" y="157.48" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="P$3"/>
+<wire x1="205.74" y1="116.84" x2="210.82" y2="116.84" width="0.1524" layer="91"/>
+<label x="208.28" y="116.84" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="P$4"/>
+<wire x1="205.74" y1="106.68" x2="210.82" y2="106.68" width="0.1524" layer="91"/>
+<label x="208.28" y="106.68" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="VOUT" class="0">
