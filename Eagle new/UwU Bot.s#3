@@ -816,8 +816,8 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <part name="DISPLAY_CON" library="con-lstb" library_urn="urn:adsk.eagle:library:162" deviceset="MA08-2" device="" package3d_urn="urn:adsk.eagle:package:8335/1"/>
 <part name="MOTOR_R" library="con-lstb" library_urn="urn:adsk.eagle:library:162" deviceset="MA04-1" device="" package3d_urn="urn:adsk.eagle:package:8337/1"/>
 <part name="MOTOR_L" library="con-lstb" library_urn="urn:adsk.eagle:library:162" deviceset="MA04-1" device="" package3d_urn="urn:adsk.eagle:package:8337/1"/>
-<part name="STEPPER_MOTOR_DRIVER_R" library="A4988_STEPPER_MOTOR_DRIVER_CARRIER_BLACK" deviceset="A4988_STEPPER_MOTOR_DRIVER_CARRIER_BLACK" device=""/>
-<part name="STEPPER_MOTOR_DRIVER_L" library="A4988_STEPPER_MOTOR_DRIVER_CARRIER_BLACK" deviceset="A4988_STEPPER_MOTOR_DRIVER_CARRIER_BLACK" device=""/>
+<part name="STEPPER_MOTOR_DRIVER_R" library="A4988_STEPPER_MOTOR_DRIVER_CARRIER_BLACK" deviceset="A4988_STEPPER_MOTOR_DRIVER_CARRIER_BLACK" device="" value="A4988_STEPPER_MOTOR_DRIVER"/>
+<part name="STEPPER_MOTOR_DRIVER_L" library="A4988_STEPPER_MOTOR_DRIVER_CARRIER_BLACK" deviceset="A4988_STEPPER_MOTOR_DRIVER_CARRIER_BLACK" device="" value="A4988_STEPPER_MOTOR_DRIVER"/>
 <part name="U1" library="DC-DC Converter" library_urn="urn:adsk.eagle:library:20810979" deviceset="173010535" device="" package3d_urn="urn:adsk.eagle:package:20779907/3"/>
 <part name="U$1" library="buchse" deviceset="BUCHSE" device="DC"/>
 </parts>
