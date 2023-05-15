@@ -2,7 +2,7 @@
 
 ---
 
-## App
+## Android App
 
 ---
 
@@ -64,7 +64,7 @@
 
 ## Motoren
 
-- Schrittmotoren
+- zwei Schrittmotoren
 - präzise
 - schnell
 - leistungsstark
@@ -95,6 +95,16 @@
 
 ## Räder
 
+- zwei Hinterräder
 - 3D modelliert und gedruckt
 - aus PLA Kunststoff
 - Profil zur besseren Haftung
+- vorne Möbelrollen
+
+## Lenkung
+
+- zwei fixe Räder, können nicht lenken
+- Panzersteuerung
+- Räder können sich unabhängig voneinander drehen
+- ein Rad schneller als das andere - lenken
+- entgegengesetzte Richtung - an der Stelle drehen
