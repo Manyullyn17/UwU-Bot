@@ -90,7 +90,7 @@
 - ESP32 hat zwei Kerne
 - können parallel zwei Aufgaben ausführen
 - Kern 0 - ruft durchgehend `runSpeed()` auf
-- Kern 1 - Bluetooth-Kommunikation, Datenverarbeitung, setzen der Drehgeschwindigkeit <br>
+- Kern 1 - Bluetooth-Kommunikation, Datenverarbeitung, setzen der Drehgeschwindigkeit  
   und Ansteuerung des Displays
 
 ## Räder
