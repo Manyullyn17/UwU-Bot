@@ -1,8 +1,8 @@
 # UwU-Bot Präsentation
 
----
+![UwU-Bot Logo](./pictures/UwU-Bot_Logo.jpg)
 
-## Android App
+## **Android App**
 
 ---
 
@@ -26,48 +26,49 @@
 ### Android-Bluetooth-Serial Bibliothek
 
 - einfach mit Gerät verbinden
-  - kann verfügbare Geräte auflisten und per Name mit Gerät verbinden
+  - verfügbare Geräte auflisten
+  - per Name oder MAC Adresse mit Gerät verbinden
 - einfach Daten senden und empfangen
-- gibt Feedback ob Verbindung erfolgreich, Daten gesendet und empfangen wurden
+- Feedback bei erfolgreicher Verbindung, Daten senden und empfangen
 
----
-
-## Datenübertragung und Verarbeitung
+## **Datenübertragung und Verarbeitung**
 
 ---
 
 ## Empfang der Daten
 
 - ESP32 empfängt Daten mit BluetoothSerial Bibliothek
-- empfangene Daten müssen weiter verarbeitet werden
-- ließt einen String ein
+- ließt immer einzelnen String ein
+- String muss weiter verarbeitet werden
 
 ## Verarbeitung der Daten
 
-- String besteht aus cmd und value
-- cmd (char) gibt an welche Funktion der ESP ausführen soll
-- value (int) gibt den Wert für diese Funktion an
+- String besteht aus Befehl und Wert
+- Befehl und Wert werden voneinander getrennt
+- Befehl (char) gibt an welche Funktion ausgeführt werden soll
+- Wert (int) gibt den Wert für diese Funktion an
+  - muss gegebenenfalls umgerechnet werden
 
 ## Befehle
 
 - L/R - setzt Geschwindigkeit vom linken/rechten Rad
-  - value wird von Prozent zu Schritte pro Sekunde umgerechnet
+  - Wert von Prozent zu Schritte pro Sekunde umrechnen
+  - max. Geschwindigkeit ist im Code festgelegt
   - Ergebnis wird an `setSpeed()` Funktion weitergegeben
 - F - ändert am Display angezeigtes Gesicht
-  - value wird an `drawFace()` Funktion weitergegeben
+  - Wert wird an `drawFace()` Funktion weitergegeben
 
----
-
-## Fahrwerk
+## **Fahrwerk**
 
 ---
 
 ## Motoren
 
 - zwei Schrittmotoren
-- präzise
-- schnell
+- präzise & schnell
 - leistungsstark
+- Räder direkt an Achse befestigt
+- Ansteuerung mit Treiber
 
 ## Schrittmotor-Treiber
 
@@ -99,7 +100,7 @@
 - 3D modelliert und gedruckt
 - aus PLA Kunststoff
 - Profil zur besseren Haftung
-- vorne Möbelrollen
+- vorne zwei omnidirektionale Möbelrollen
 
 ## Lenkung
 
@@ -108,3 +109,5 @@
 - Räder können sich unabhängig voneinander drehen
 - ein Rad schneller als das andere - lenken
 - entgegengesetzte Richtung - an der Stelle drehen
+
+> Manuel Greiler
